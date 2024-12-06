@@ -32,6 +32,8 @@ locals {
     addr        = coalesce(var.graph_existing.addr, "${var.graph_internal.service}.${var.app_internal.namespace}.svc.cluster.local")
   }
 
+  create_monitor = var.app.monitor
+
   create_search = var.cluster.search && (var.search_existing.base_domain == null || var.search_existing.base_url == null || var.search_existing.port == null)
   search_settings = {
     base_domain = coalesce(var.search_existing.base_domain, "${var.search_internal.service}-cluster-master.${var.app_internal.namespace}.svc.cluster.local")

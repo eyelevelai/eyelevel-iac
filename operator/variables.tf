@@ -19,10 +19,12 @@ variable "app" {
   type              = object({
     graph           = bool
     languages       = list(string)
+    monitor         = bool
   })
   default           = {
     graph           = false
     languages       = ["en"]
+    monitor         = false
   }
 }
 
@@ -709,6 +711,37 @@ variable "layout_webhook_internal" {
     }
     service      = "layout-webhook"
     version      = "0.0.1"
+  }
+}
+
+
+# MONITOR
+
+variable "monitor_internal" {
+  description = ""
+  type        = object({
+    chart     = object({
+      name    = string
+      url     = string
+    })
+    namespace = string
+    redis     = object({
+      name    = string
+      url     = string
+    })
+    service   = string
+  })
+  default     = {
+    chart     = {
+      name    = "prometheus"
+      url     = "https://prometheus-community.github.io/helm-charts"
+    }
+    namespace = "eyelevel-monitor"
+    redis     = {
+      name    = "prometheus-redis-exporter"
+      url     = "https://prometheus-community.github.io/helm-charts"
+    }
+    service   = "monitor"
   }
 }
 
