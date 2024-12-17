@@ -14,6 +14,7 @@ env = dict(
     ocrProject="${ocrProject}",
     ocrType="${ocrType}",
     queueType="kafka",
+    service="${layoutService}",
     uploadBase="layout/processed/",
     uploadBaseURL="${fileBaseDomain}",
     uploadBucket="${uploadBucket}",

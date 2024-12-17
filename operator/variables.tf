@@ -720,6 +720,10 @@ variable "layout_webhook_internal" {
 variable "monitor_internal" {
   description = ""
   type        = object({
+    adapter   = object({
+      name    = string
+      url     = string
+    })
     chart     = object({
       name    = string
       url     = string
@@ -732,6 +736,10 @@ variable "monitor_internal" {
     service   = string
   })
   default     = {
+    adapter   = {
+      name    = "prometheus-adapter"
+      url     = "https://prometheus-community.github.io/helm-charts"
+    }
     chart     = {
       name    = "prometheus"
       url     = "https://prometheus-community.github.io/helm-charts"
