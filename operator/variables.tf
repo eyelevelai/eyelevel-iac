@@ -718,38 +718,46 @@ variable "layout_webhook_internal" {
 # MONITOR
 
 variable "monitor_internal" {
-  description = ""
-  type        = object({
-    adapter   = object({
-      name    = string
-      url     = string
+  description   = ""
+  type          = object({
+    adapter     = object({
+      name      = string
+      url       = string
     })
-    chart     = object({
-      name    = string
-      url     = string
+    chart       = object({
+      name      = string
+      url       = string
     })
-    namespace = string
-    redis     = object({
-      name    = string
-      url     = string
+    keda        = object({
+      name      = string
+      url       = string
     })
-    service   = string
+    namespace   = string
+    redis       = object({
+      name      = string
+      url       = string
+    })
+    service     = string
   })
-  default     = {
-    adapter   = {
-      name    = "prometheus-adapter"
-      url     = "https://prometheus-community.github.io/helm-charts"
+  default       = {
+    adapter     = {
+      name      = "prometheus-adapter"
+      url       = "https://prometheus-community.github.io/helm-charts"
     }
-    chart     = {
-      name    = "prometheus"
-      url     = "https://prometheus-community.github.io/helm-charts"
+    chart       = {
+      name      = "prometheus"
+      url       = "https://prometheus-community.github.io/helm-charts"
     }
-    namespace = "eyelevel-monitor"
-    redis     = {
-      name    = "prometheus-redis-exporter"
-      url     = "https://prometheus-community.github.io/helm-charts"
+    keda        = {
+      name      = "keda"
+      url       = "https://kedacore.github.io/charts"
     }
-    service   = "monitor"
+    namespace   = "eyelevel-monitor"
+    redis       = {
+      name      = "prometheus-redis-exporter"
+      url       = "https://prometheus-community.github.io/helm-charts"
+    }
+    service     = "monitor"
   }
 }
 

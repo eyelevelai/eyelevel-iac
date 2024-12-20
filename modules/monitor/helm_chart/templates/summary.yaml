@@ -1,0 +1,17 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ .Values.service.name }}
+  namespace: {{ .Values.service.namespace }}
+  labels:
+    deploymentName: {{ .Values.service.name }}
+    app: {{ .Values.service.name }}
+spec:
+  scaleTargetRef:
+    name: {{ .Values.settings.target }}
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: {{ .Values.settings.serverAddress }}
+        query: {{ .Values.settings.query }}
+        threshold: "{{ .Values.settings.threshold }}"
