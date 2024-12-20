@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+CONCURRENCY=1
+
 BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . "$BIN_DIR/shared/util"
 
@@ -99,7 +101,7 @@ if [[ -n "$ENV" ]]; then
       if [[ "$ENV" == "aws" ]]; then
         recurse_ordered $do "$ENV_BASE" "$ENV" "${valid_aws[@]}"
       else
-        recurse_directories $do "$ENV_BASE/$ENV"
+        recurse_directories $do "$ENV_BASE/$ENV" $CONCURRENCY
       fi
     else
       $do "$ENV_BASE/$ENV"

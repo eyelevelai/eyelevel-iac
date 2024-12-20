@@ -37,13 +37,38 @@ ok() {
 recurse_directories() {
   local do=$1
   local dir="$2"
+  local max_concurrent=$3
+  local semaphore=$max_concurrent
+  local pids=()
 
   if [[ -d "$dir" ]]; then
     for sub_dir in "$dir"/*; do
       if [[ -d "$sub_dir" ]]; then
-        $do "$sub_dir"
+        if [[ $max_concurrent -gt 1 ]]; then
+          (
+            $do "$sub_dir"
+          ) &
+          pids+=($!)
+
+          ((semaphore--))
+
+          if [[ $semaphore -eq 0 ]]; then
+            wait -n
+            ((semaphore++))
+          fi
+        else
+          $do "$sub_dir"
+        fi
       fi
     done
+    if [[ $max_concurrent -gt 1 ]]; then
+      for pid in "${pids[@]}"; do
+        wait "$pid" || {
+          echo "Error: A process failed for $sub_dir."
+          exit 1
+        }
+      done
+    fi
   else
     echo "Error: Directory '$dir' does not exist."
     exit 1

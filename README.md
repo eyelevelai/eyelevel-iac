@@ -404,13 +404,13 @@ client = GroundX(api_key=api_key, base_url=f"http://{external_ip}/api")
 ```
 
 ```typescript
-import { Groundx } from "groundx-typescript-sdk";
+import { GroundXClient } from "groundx";
 
 const external_ip = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxx.us-east-2.elb.amazonaws.com'
 
-const groundx = new Groundx({
+const groundx = new GroundXClient({
   apiKey: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-  basePath: `http://${external_ip}/api`;,
+  environment: `http://${external_ip}/api`;,
 });
 ```
 

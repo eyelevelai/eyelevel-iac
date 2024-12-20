@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+CONCURRENCY=1
+
 BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . "$BIN_DIR/shared/util"
 
@@ -130,7 +132,7 @@ fi
 if [[ -n "$GROUP" ]]; then
   if [[ " ${valid_groups[@]} " =~ " $GROUP " ]]; then
     if [[ " ${recursive_types[@]} " =~ " $GROUP " ]]; then
-      recurse_directories $do "$BIN_DIR/../operator/$GROUP"
+      recurse_directories $do "$BIN_DIR/../operator/$GROUP" $CONCURRENCY
     else
       $do "$BIN_DIR/../operator/$GROUP"
     fi
@@ -147,7 +149,7 @@ elif [[ -n "$SERVICE" ]]; then
 else
   for dir in "${valid_groups[@]}"; do
     if [[ " ${recursive_types[@]} " =~ " $dir " ]]; then
-      recurse_directories $do "$BIN_DIR/../operator/$dir"
+      recurse_directories $do "$BIN_DIR/../operator/$dir" $CONCURRENCY
     else
       $do "$BIN_DIR/../operator/$dir"
     fi
